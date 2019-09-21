@@ -1,0 +1,4 @@
+PROGRAM -> program ID BLOCK end.
+ID -> LET
+ID -> LET'
+LET' -> LET
