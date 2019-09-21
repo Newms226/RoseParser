@@ -1,0 +1,19 @@
+PROGRAM -> program ID STMT .
+
+STMT -> EXPR
+STMT -> EXPR; STMT
+
+EXPR -> VAR_DEC
+VAR_DEC -> var ID
+
+EXPR -> ID = ID + ID
+EXPR -> ID = ID - ID
+
+EXPR -> ASSIGN
+ASSIGN -> ID := LIT
+ASSIGN -> ID := ID
+
+LIT -> TRUE
+LIT -> FALSE
+
+LIT -> INT_LIT
