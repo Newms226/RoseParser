@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="456d8450-1e65-411d-a58f-8ebab1c4a123" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/token.py" beforeDir="false" afterPath="$PROJECT_DIR$/token.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,14 +77,14 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+                <state relative-caret-position="616">
+                  <caret line="131" column="33" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
-                    <marker date="1569224888427" expanded="true" signature="6304:6384" ph="..." />
+                    <marker date="1569225931523" expanded="true" signature="6650:6732" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -145,7 +144,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/token.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state>
@@ -204,8 +203,8 @@
         <option value="$PROJECT_DIR$/sources/source2.pas" />
         <option value="$PROJECT_DIR$/sources/eof_exp.pas" />
         <option value="$PROJECT_DIR$/sources/ident_exp.pas" />
-        <option value="$PROJECT_DIR$/parser.py" />
         <option value="$PROJECT_DIR$/token.py" />
+        <option value="$PROJECT_DIR$/parser.py" />
       </list>
     </option>
   </component>
@@ -286,12 +285,12 @@
       <workItem from="1569011029084" duration="13037000" />
       <workItem from="1569100869596" duration="17000" />
       <workItem from="1569100898348" duration="94000" />
-      <workItem from="1569101001926" duration="13035000" />
+      <workItem from="1569101001926" duration="13798000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26183000" />
+    <option name="totallyTimeSpent" value="26946000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1680" y="-392" width="1920" height="1080" extended-state="0" />
@@ -442,17 +441,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1569224888427" expanded="true" signature="6304:6384" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sources/lit_exp.pas">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -484,6 +472,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="131" column="33" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <marker date="1569225931523" expanded="true" signature="6650:6732" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

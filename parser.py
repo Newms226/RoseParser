@@ -78,7 +78,7 @@ def load_table(input):
         gotos += [{}]
         row = line.strip().split(",")
         state = int(row[0])
-        print(f"parsing line {line}")
+        # print(f"parsing line {line}")
         actions[state].update({Token.EOF: None})
         assert Token.EOF in actions[state]
         for i, token in enumerate(tokens):
@@ -119,9 +119,20 @@ def print_gotos(gotos):
         print(gotos[key])
 
 def examine_error(actions, state, token, lexme):
-    filtered = [k.name for k, v in actions[state].items() if v is not None]
-    print(f"ERROR LIKELY. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
-          f"\nPOSSIBLE RECOVERY:\n  {filtered}")
+    # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
+    filtered = [k for k, v in actions[state].items() if v is not None]
+    print(f"\nERROR LIKELY. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
+          f"\nPOSSIBLE RECOVERY:\n  {filtered}\n\n")
+
+    if filtered == [Token.IDENTIFIER]:
+        raise errors.NO_IDENT
+    elif filtered == [Token.IDENTIFIER, Token.TRUE, Token.FALSE, Token.INTEGER_LITERAL]:
+        raise errors.NO_IDENT_OR_LIT
+    else:
+        raise errors.SYNTAX_ERROR
+
+    # names = [k.name for k in filtered]
+
 
 
 def parse(input, grammar, actions, gotos):
@@ -230,7 +241,7 @@ if __name__ == "__main__":
 
     if tree:
         print("Input is syntactically correct!")
-        print("Parse Tree:")
+        print("\nParse Tree:")
         tree.print("")
     else:
         print("Code has syntax errors!")
