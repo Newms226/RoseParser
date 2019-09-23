@@ -10,7 +10,7 @@ INTRO = """
 Welcome to the RoseParser. Built by Michael Newman from base code by 
 Dr. Thyago Mota. This program expects the source as input to the command line 
 as 'NAME.pas' which will automatically load from './ources/NAME.pas'.Further, 
-it expects the grammar at './grammar.txt' and the SLR table at './slr.csv'.
+it expects the grammar at './grammar.txt' and the SLR table at './lr.csv'.
 """
 
 INPUT = """           
@@ -89,7 +89,7 @@ def load_table(input):
             value = row[i + 1]
             if len(value) != 0:
                 if '/' in value:
-
+                    value = Errors.BAD_SLR
                 #     raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
                 # value = None
                 actions[state].update({token: value})
@@ -212,10 +212,10 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         raise Errors.MISSING_SOURCE
 
-    source_path = "./sources/" + sys.argv[1]
+    # TODO: Edit the intro, just loads a normal file path
 
-    program_path, program = read_file(source_path, Errors.SOURCE_ERROR)
-    grammar_path, grammar = read_file("./grammar.txt", errors.MISSING_GRAMMAR)
+    program_path, program = read_file(sys.argv[1], Errors.SOURCE_ERROR)
+    grammar_path, grammar = read_file("./grammar.txt", Errors.MISSING_GRAMMAR)
 
     slr_path = os.path.abspath("./slr.csv")
     try:
@@ -229,8 +229,9 @@ if __name__ == "__main__":
     # print_grammar(grammar)
 
     actions, gotos = load_table(slr)
-    print(f"\n\nActions: {print_dict(actions)}")
-    # print(f"\n\nGotos: {print_dict(gotos)}")
+    # print(f"\n\nActions: {print_dict(actions)}")
+    print(f"\n\nGotos:")
+    print_dict(gotos)
     #
     # print("Beginning to parse....\n")
     # tree = parse(program, grammar, actions, gotos)
