@@ -122,7 +122,7 @@ def examine_error(actions, state, token, lexme):
     # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
     filtered = [k for k, v in actions[state].items() if v is not None]
     print(f"\nERROR LIKELY. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
-          f"\nPOSSIBLE RECOVERY:\n  {filtered}\n\n")
+          f"\nPOSSIBLE RECOVERY:\n  {filtered}\n")
 
     if filtered == [Token.IDENTIFIER]:
         raise errors.NO_IDENT
@@ -132,7 +132,6 @@ def examine_error(actions, state, token, lexme):
         raise errors.SYNTAX_ERROR
 
     # names = [k.name for k in filtered]
-
 
 
 def parse(input, grammar, actions, gotos):
@@ -153,7 +152,6 @@ def parse(input, grammar, actions, gotos):
         if action is None:
             examine_error(actions, state, token, lexeme)
             return None
-
 
         # shift operation
         elif action[0] == 's':
@@ -176,17 +174,17 @@ def parse(input, grammar, actions, gotos):
             print(f"reading state: {state}, lhs: {lhs}")
             stack.append(int(gotos[state][lhs]))
 
-            newTree = Tree(lhs)
+            new_tree = Tree(lhs)
 
             # TODOd #4: get "len(rhs)" trees from the right of the list of trees and add each of them as child of the new tree you created, preserving the left-right order
             for tree in trees[-len(rhs):]:
-                newTree.add(tree)
+                new_tree.add(tree)
 
             # TODOd #5: remove "len(rhs)" trees from the right of the list of trees
             trees = trees[:-len(rhs)]
 
             # TODOd #6: append the new tree to the list of trees
-            trees.append(newTree)
+            trees.append(new_tree)
 
             input = lexeme + " " + input
 
