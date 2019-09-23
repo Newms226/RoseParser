@@ -86,7 +86,7 @@ def get_non_blank(input):
 # adds the next char from input to lexeme, advancing the input by one char
 def add_char(input, lexeme, count=1):
     if len(input) > 0:
-        lexeme += input[0]
+        lexeme += input[:count]
         input = input[count:]
     return (input, lexeme)
 
