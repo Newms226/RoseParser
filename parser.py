@@ -1,6 +1,6 @@
 import sys
 import os
-import errors
+from errors import *
 
 from lex import lex, lookup
 from tree import Tree
@@ -9,7 +9,7 @@ from token import Token
 INTRO = """
 Welcome to the RoseParser. Built by Michael Newman from base code by 
 Dr. Thyago Mota. This program expects the source as input to the command line 
-as 'NAME.pas' which will automatically load from './sources/NAME.pas'.Further, 
+as 'NAME.pas' which will automatically load from './ources/NAME.pas'.Further, 
 it expects the grammar at './grammar.txt' and the SLR table at './slr.csv'.
 """
 
@@ -64,8 +64,11 @@ def load_table(input):
     headers = input.readline().strip().split(",")
     end = headers.index("$")
     tokens = []
-    for field in headers[1:end + 1]:
-        tokens.append(Token[field])
+    for field in [x.lower() for x in headers[1:end + 1]]:
+        if field in lookup:
+            tokens.append(lookup[field])
+        else:  # assume token
+            tokens.append(Token[field])
         # tokens.append(int(field))
     print(tokens)
     variables = headers[end + 1:]
@@ -79,12 +82,15 @@ def load_table(input):
         row = line.strip().split(",")
         state = int(row[0])
         # print(f"parsing line {line}")
-        actions[state].update({Token.EOF: None})
+        # actions[state].update({Token.EOF: None})
         # assert Token.EOF in actions[state]
         for i, token in enumerate(tokens):
             # key = (state, token)
             value = row[i + 1]
             if len(value) != 0:
+                if '/' in value:
+
+                #     raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
                 # value = None
                 actions[state].update({token: value})
         for i, variable in enumerate(variables):
@@ -105,31 +111,27 @@ def print_grammar(grammar):
 
 
 # prints the given actions, one per line
-def print_actions(actions):
+def print_dict(actions):
     for i, a in enumerate(actions):
         print(f"{i}:")
         for k, v in a.items():
             print(f"  {k}: {v}")
 
 
-# prints the given gotos, one per line
-def print_gotos(gotos):
-    for key in gotos:
-        print(key, end=" -> ")
-        print(gotos[key])
-
 def examine_error(actions, state, token, lexme):
     # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
-    filtered = [k for k, v in actions[state].items() if v is not None]
+    filtered = actions[state].keys()
     print(f"\nERROR LIKELY. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
           f"\nPOSSIBLE RECOVERY:\n  {filtered}\n")
 
     if filtered == [Token.IDENTIFIER]:
-        raise errors.NO_IDENT
+        raise Errors.NO_IDENT
     elif filtered == [Token.IDENTIFIER, Token.TRUE, Token.FALSE, Token.INTEGER_LITERAL]:
-        raise errors.NO_IDENT_OR_LIT
+        raise Errors.NO_IDENT_OR_LIT
+    elif token == Errors.BAD_SLR:
+        raise Errors.BAD_SLR
     else:
-        raise errors.SYNTAX_ERROR
+        raise Errors.SYNTAX_ERROR
 
     # names = [k.name for k in filtered]
 
@@ -145,7 +147,7 @@ def parse(input, grammar, actions, gotos):
         print(f"stack: {stack} \n  current token: {token}")
 
         # TODO what should we do if NONE is returned? IE: When EOF is reached
-        if token in actions[state]:
+        if token in actions[state] and token != Errors.BAD_SLR:
             action = actions[state][token]
             print(f"  action: {action}")
         else:
@@ -208,18 +210,18 @@ if __name__ == "__main__":
     print(INTRO)
 
     if len(sys.argv) != 2:
-        raise errors.MISSING_SOURCE
+        raise Errors.MISSING_SOURCE
 
     source_path = "./sources/" + sys.argv[1]
 
-    program_path, program = read_file(source_path, errors.SOURCE_ERROR)
+    program_path, program = read_file(source_path, Errors.SOURCE_ERROR)
     grammar_path, grammar = read_file("./grammar.txt", errors.MISSING_GRAMMAR)
 
     slr_path = os.path.abspath("./slr.csv")
     try:
         slr = open(slr_path, "r")
     except FileNotFoundError:
-        raise errors.MISSING_SLR
+        raise Errors.MISSING_SLR
 
     print(INPUT.format(program_path, grammar_path, slr_path))
 
@@ -227,21 +229,18 @@ if __name__ == "__main__":
     # print_grammar(grammar)
 
     actions, gotos = load_table(slr)
-    print("\n\nActions:")
-    # print_actions(actions)
-    print("\n\nGotos:")
-    # print_gotos(gotos)
-    # print_actions(gotos)
+    print(f"\n\nActions: {print_dict(actions)}")
+    # print(f"\n\nGotos: {print_dict(gotos)}")
     #
-    print("Beginning to parse....\n")
-    tree = parse(program, grammar, actions, gotos)
-
-    if tree:
-        print("Input is syntactically correct!")
-        print("\nParse Tree:")
-        tree.print("")
-    else:
-        print("Code has syntax errors!")
+    # print("Beginning to parse....\n")
+    # tree = parse(program, grammar, actions, gotos)
+    #
+    # if tree:
+    #     print("Input is syntactically correct!")
+    #     print("\nParse Tree:")
+    #     tree.print("")
+    # else:
+    #     print("Code has syntax errors!")
 
 # # returns the LHS (left hand side) of a given production
 # def get_lhs(production):

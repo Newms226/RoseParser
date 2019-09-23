@@ -27,6 +27,7 @@ lookup = {
     ":=": Token.ASSIGNMENT,
     "begin": Token.BEGIN,
     "boolean": Token.BOOLEAN_TYPE,
+    "boolean_type": Token.BOOLEAN_TYPE,
     ":": Token.COLON,
     "do": Token.DO,
     "else": Token.ELSE,
@@ -37,6 +38,7 @@ lookup = {
     ">=": Token.GREATER_EQUAL,
     "if": Token.IF,
     "integer": Token.INTEGER_TYPE,
+    "integer_type": Token.INTEGER_TYPE,
     "<": Token.LESS,
     "<=": Token.LESS_EQUAL,
     "*": Token.MULTIPLICATION,
@@ -51,7 +53,9 @@ lookup = {
     "while": Token.WHILE,
     "write": Token.WRITE,
     "id": Token.IDENTIFIER,
-    "$": Token.EOF
+    "$": Token.EOF,
+    "integer_lit": Token.INTEGER_LITERAL,
+
 }
 
 
