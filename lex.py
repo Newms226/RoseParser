@@ -4,7 +4,7 @@
 import sys
 
 from enum import Enum
-from errors import LexProblem
+from errors import gen_lex_problem
 from token import Token
 
 
@@ -75,7 +75,7 @@ def get_char(input):
     if c in [' ', '\n', '\t']:
         return c, CharClass.BLANK
     # else
-    raise LexProblem(message=f"failed to get_char with c={c}")
+    raise gen_lex_problem(f"failed to get_char with c={c}")
 
 
 # calls getChar and getChar until it returns a non-blank

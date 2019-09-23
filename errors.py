@@ -1,7 +1,7 @@
 
 from enum import Enum
 
-class Errors(Enum):
+class Errors(Exception):
     MISSING_SOURCE = ValueError("ERROR 1: Source File Missing")
     SOURCE_ERROR = IOError("ERROR 2: Couldn't open source file")
     MISSING_GRAMMAR = IOError("ERROR 4: Couldn't open grammar file")
@@ -13,15 +13,10 @@ class Errors(Enum):
     NO_TYPE = TypeError("ERROR 10: Data type expected")
     NO_IDENT_OR_LIT = TypeError("ERROR 11: Identifier or literal value expected")
     SYNTAX_ERROR = SyntaxError("ERROR 99: Syntax Error")
-
     BAD_SLR = SyntaxError("ERROR 98: Invalid SLR Construction")
 
-
-class LexProblem(Exception):
-
-    def __init__(self, message=None):
-        super(LexProblem, self).__init__()
-        init_msg = "ERROR 3: Lexical Error"
-        if message:
-            init_msg += message
-        self.message = init_msg
+def gen_lex_problem(message=None):
+    init_msg = "ERROR 3: Lexical Error"
+    if message:
+        init_msg += ": " + message
+    return SyntaxError(message)

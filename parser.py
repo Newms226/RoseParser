@@ -90,7 +90,7 @@ def load_table(input):
             if len(value) != 0:
                 if '/' in value:
                     value = Errors.BAD_SLR
-                #     raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
+                    # raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
                 # value = None
                 actions[state].update({token: value})
         for i, variable in enumerate(variables):
@@ -109,13 +109,15 @@ def print_grammar(grammar):
         rhs_str = " ".join(rhs)
         print(f"{i}. {lhs} -> {rhs_str}")
 
-
+def _gen_dict(actions):
+    for i, a in enumerate(actions):
+        yield f"{i}:"
+        for k, v in a.items():
+            yield f"  {k}: {v}"
 # prints the given actions, one per line
 def print_dict(actions):
-    for i, a in enumerate(actions):
-        print(f"{i}:")
-        for k, v in a.items():
-            print(f"  {k}: {v}")
+    for line in _gen_dict(actions):
+        print(line)
 
 
 def examine_error(actions, state, token, lexme):
@@ -205,6 +207,13 @@ def parse(input, grammar, actions, gotos):
         else:
             raise Exception("Failed :/")
 
+def _file_dump(dict, name):
+    path = f"./logs/{name}.txt"
+    file = open(path, "w")
+    file.write(f"{name}\n\n")
+    for line in _gen_dict(dict):
+        file.write(line + "\n")
+
 
 if __name__ == "__main__":
     print(INTRO)
@@ -228,20 +237,26 @@ if __name__ == "__main__":
     grammar = load_grammar(grammar)
     # print_grammar(grammar)
 
+
     actions, gotos = load_table(slr)
-    # print(f"\n\nActions: {print_dict(actions)}")
-    print(f"\n\nGotos:")
-    print_dict(gotos)
+
+    os.makedirs("./logs", exist_ok=True)
+    _file_dump(gotos, "gotos")
+    _file_dump(actions, "actions")
+    # print(f"\n\nActions:")
+    # print_dict(actions)
+    # print(f"\n\nGotos:")
+    # print_dict(gotos)
     #
-    # print("Beginning to parse....\n")
-    # tree = parse(program, grammar, actions, gotos)
-    #
-    # if tree:
-    #     print("Input is syntactically correct!")
-    #     print("\nParse Tree:")
-    #     tree.print("")
-    # else:
-    #     print("Code has syntax errors!")
+    print("Beginning to parse....\n")
+    tree = parse(program, grammar, actions, gotos)
+
+    if tree:
+        print("Input is syntactically correct!")
+        print("\nParse Tree:")
+        tree.print("")
+    else:
+        print("Code has syntax errors!")
 
 # # returns the LHS (left hand side) of a given production
 # def get_lhs(production):
