@@ -60,8 +60,8 @@ def load_grammar(input):
 
 # reads the given input containing an SLR parsing table and returns the "actions" and "gotos" as dictionaries
 def load_table(input):
-    actions = {}
-    gotos = {}
+    actions = []
+    gotos = []
     header = input.readline().strip().split(",")
     end = header.index("EOF")
     tokens = []
@@ -70,23 +70,30 @@ def load_table(input):
         # tokens.append(int(field))
     print(tokens)
     variables = header[end:]
+
+    # for i in range(tokens):
+    #     actions ++ [{}
+
     for line in input:
+        actions += [{}]
+        gotos += [{}]
         row = line.strip().split(",")
         state = int(row[0])
-        for i in range(len(tokens)):
-            token = tokens[i]
-            key = (state, token)
+        print(f"parsing line {line}")
+        actions[state].update({Token.EOF: None})
+        assert Token.EOF in actions[state]
+        for i, token in enumerate(tokens):
+            # key = (state, token)
             value = row[i + 1]
             if len(value) == 0:
                 value = None
-            actions[key] = value
-        for i in range(len(variables)):
-            variable = variables[i]
-            key = (state, variable)
+            actions[state].update({token: value})
+        for i, variable in enumerate(variables):
+            # key = (state, variable)
             value = row[i + len(tokens)]
             if len(value) == 0:
                 value = None
-            gotos[key] = value
+            gotos[state].update({variable: value})
     return actions, gotos
 
 
@@ -100,9 +107,10 @@ def print_grammar(grammar):
 
 # prints the given actions, one per line
 def print_actions(actions):
-    for key in actions:
-        print(key, end = " -> ")
-        print(actions[key])
+    for i, a in enumerate(actions):
+        print(f"{i}:")
+        for k, v in a.items():
+            print(f"  {k}: {v}")
 
 
 # prints the given gotos, one per line
@@ -120,18 +128,19 @@ def parse(input, grammar, actions, gotos):
     while not accept:
         state = stack[-1]
         input, lexeme, token = lex(input)
-        print(f"stack: {stack} current token: {token}")
+        print(f"stack: {stack} \n  current token: {token}")
 
         # TODO what should we do if NONE is returned? IE: When EOF is reached
 
 
         action = actions[(state, token)]
+        print(f"  action: {action}")
 
-        # if action is None:
-        #     return None  # tree building update
+        if action is None:
+            return None  # tree building update
 
         # shift operation
-        if action[0] == 's':
+        elif action[0] == 's':
             # input.pop(0)
             stack.append(token)
             state = int(action[1:])
@@ -206,20 +215,21 @@ if __name__ == "__main__":
     # print_grammar(grammar)
 
     actions, gotos = load_table(slr)
-    # print("\n\nActions:")
-    print_actions(actions)
+    print("\n\nActions:")
+    # print_actions(actions)
     # print("\n\nGotos:")
-    print_gotos(gotos)
+    # print_gotos(gotos)
+    print_actions(gotos)
 
-    print("Beginning to parse....\n")
-    tree = parse(program, grammar, actions, gotos)
-
-    if tree:
-        print("Input is syntactically correct!")
-        print("Parse Tree:")
-        tree.print("")
-    else:
-        print("Code has syntax errors!")
+    # print("Beginning to parse....\n")
+    # tree = parse(program, grammar, actions, gotos)
+    #
+    # if tree:
+    #     print("Input is syntactically correct!")
+    #     print("Parse Tree:")
+    #     tree.print("")
+    # else:
+    #     print("Code has syntax errors!")
 
 
 # # returns the LHS (left hand side) of a given production
