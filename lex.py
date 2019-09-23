@@ -100,7 +100,7 @@ def lex(input):
 
     # check EOF first
     if char_class == CharClass.EOF:
-        return input, None, None
+        return input, "$", Token.EOF
 
     # elif char_class == CharClass.LETTER:
     #     input, lexeme = read_ident(lexeme, input)

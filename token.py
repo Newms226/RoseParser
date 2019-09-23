@@ -31,6 +31,7 @@ class Token(Enum):
     VAR = 27
     WHILE = 28
     WRITE = 29
+    EOF = 30
 
 
 

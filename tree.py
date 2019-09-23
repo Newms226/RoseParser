@@ -11,7 +11,7 @@ class Tree:
 
     def print(self, tab = ""):
         if self.data != None:
-            print(tab + self.data)
+            print(tab + str(self.data))
             tab += Tree.TAB
             for child in self.children:
                 if isinstance(child, Tree):

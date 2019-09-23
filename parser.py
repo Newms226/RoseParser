@@ -52,6 +52,9 @@ def load_grammar(input):
             rhs = rhs.strip().split(" ")
             # print(f"PARSED VALUES: lhs: {lhs} rhs: {rhs}")
             grammar.append((lhs, rhs))
+
+    lhs, _ = grammar[2]
+    grammar[2] = (lhs, ["EXPR", ";", "STMT"]) # TODO THIS IS SOOO BAD :(
     return grammar
 
 
@@ -60,9 +63,9 @@ def load_table(input):
     actions = {}
     gotos = {}
     header = input.readline().strip().split(",")
-    end = header.index("$")
+    end = header.index("EOF")
     tokens = []
-    for field in header[:end]:
+    for field in header[:end + 1]:
         tokens.append(Token[field])
         # tokens.append(int(field))
     print(tokens)
@@ -113,15 +116,16 @@ def parse(input, grammar, actions, gotos):
     trees = []
     stack = [0]
 
-    while True:
+    accept = False
+    while not accept:
         state = stack[-1]
         input, lexeme, token = lex(input)
         print(f"stack: {stack} current token: {token}")
 
         # TODO what should we do if NONE is returned? IE: When EOF is reached
 
+
         action = actions[(state, token)]
-        print(f"  action: {action}")
 
         # if action is None:
         #     return None  # tree building update
@@ -138,10 +142,13 @@ def parse(input, grammar, actions, gotos):
         # reduce operation
         elif action[0] == 'r':
             lhs, rhs = grammar[int(action[1:])]
+            print(f"read rhs: {' '.join(rhs)}")
             for i in range(len(rhs) * 2):
                 stack.pop()
+            print(f"new stack: {stack}")
             state = stack[-1]
             stack.append(lhs)
+            print(f"reading state: {state}, lhs: {lhs}")
             stack.append(int(gotos[(state, lhs)]))
 
             newTree = Tree(lhs)
@@ -174,6 +181,8 @@ def parse(input, grammar, actions, gotos):
         else:
             raise Exception("Failed :/")
 
+    print("ACCEPT!!!! :)")
+
 if __name__ == "__main__":
     print(INTRO)
 
@@ -197,13 +206,20 @@ if __name__ == "__main__":
     # print_grammar(grammar)
 
     actions, gotos = load_table(slr)
-    print("\n\nActions:")
+    # print("\n\nActions:")
     print_actions(actions)
-    print("\n\nGotos:")
+    # print("\n\nGotos:")
     print_gotos(gotos)
 
     print("Beginning to parse....\n")
-    # parse(program, grammar, actions, gotos)
+    tree = parse(program, grammar, actions, gotos)
+
+    if tree:
+        print("Input is syntactically correct!")
+        print("Parse Tree:")
+        tree.print("")
+    else:
+        print("Code has syntax errors!")
 
 
 # # returns the LHS (left hand side) of a given production
