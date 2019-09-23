@@ -49,7 +49,9 @@ lookup = {
     "true": Token.TRUE,
     "var": Token.VAR,
     "while": Token.WHILE,
-    "write": Token.WRITE
+    "write": Token.WRITE,
+    "id": Token.IDENTIFIER,
+    "$": Token.EOF
 }
 
 

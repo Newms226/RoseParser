@@ -56,6 +56,20 @@ def load_grammar(input):
     grammar[2] = (lhs, ["EXPR", ";", "STMT"])  # TODO THIS IS SOOO BAD :(
     return grammar
 
+# def _prepare_headers():
+#     to_pop = ["boolean", "integer"]
+#     for invalid in to_pop:
+#         lookup.pop(invalid)
+#
+#     add = {
+#         "id"
+#     }
+#     lookup.update()
+#
+# def _tokenize(feild):
+#
+
+
 
 # reads the given input containing an SLR parsing table and returns the "actions" and "gotos" as dictionaries
 def load_table(input):
@@ -65,7 +79,7 @@ def load_table(input):
     end = headers.index("EOF")
     tokens = []
     for field in headers[:end + 1]:
-        tokens.append(Token[field])
+        tokens.append(lookup[field.lower()])
         # tokens.append(int(field))
     print(tokens)
     variables = headers[end:]
