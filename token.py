@@ -17,7 +17,7 @@ class Token(Enum):
     IDENTIFIER = 13
     IF = 14
     INTEGER_LITERAL = 15
-    INTEGER_TYPE = 26
+    INTEGER_TYPE = 16
     LESS = 17
     LESS_EQUAL = 18
     MULTIPLICATION = 19

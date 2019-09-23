@@ -6,7 +6,6 @@ from lex import lex, lookup
 from tree import Tree
 from token import Token
 
-
 INTRO = """
 Welcome to the RoseParser. Built by Michael Newman from base code by 
 Dr. Thyago Mota. This program expects the source as input to the command line 
@@ -54,7 +53,7 @@ def load_grammar(input):
             grammar.append((lhs, rhs))
 
     lhs, _ = grammar[2]
-    grammar[2] = (lhs, ["EXPR", ";", "STMT"]) # TODO THIS IS SOOO BAD :(
+    grammar[2] = (lhs, ["EXPR", ";", "STMT"])  # TODO THIS IS SOOO BAD :(
     return grammar
 
 
@@ -62,14 +61,14 @@ def load_grammar(input):
 def load_table(input):
     actions = []
     gotos = []
-    header = input.readline().strip().split(",")
-    end = header.index("EOF")
+    headers = input.readline().strip().split(",")
+    end = headers.index("EOF")
     tokens = []
-    for field in header[:end + 1]:
+    for field in headers[:end + 1]:
         tokens.append(Token[field])
         # tokens.append(int(field))
     print(tokens)
-    variables = header[end:]
+    variables = headers[end:]
 
     # for i in range(tokens):
     #     actions ++ [{}
@@ -116,8 +115,13 @@ def print_actions(actions):
 # prints the given gotos, one per line
 def print_gotos(gotos):
     for key in gotos:
-        print(key, end = " -> ")
+        print(key, end=" -> ")
         print(gotos[key])
+
+def examine_error(actions, state, token, lexme):
+    filtered = [k.name for k, v in actions[state].items() if v is not None]
+    print(f"ERROR LIKELY. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
+          f"\nPOSSIBLE RECOVERY:\n  {filtered}")
 
 
 def parse(input, grammar, actions, gotos):
@@ -132,12 +136,13 @@ def parse(input, grammar, actions, gotos):
 
         # TODO what should we do if NONE is returned? IE: When EOF is reached
 
-
-        action = actions[(state, token)]
+        action = actions[state][token]
         print(f"  action: {action}")
 
         if action is None:
-            return None  # tree building update
+            examine_error(actions, state, token, lexeme)
+            return None
+
 
         # shift operation
         elif action[0] == 's':
@@ -158,7 +163,7 @@ def parse(input, grammar, actions, gotos):
             state = stack[-1]
             stack.append(lhs)
             print(f"reading state: {state}, lhs: {lhs}")
-            stack.append(int(gotos[(state, lhs)]))
+            stack.append(int(gotos[state][lhs]))
 
             newTree = Tree(lhs)
 
@@ -190,7 +195,6 @@ def parse(input, grammar, actions, gotos):
         else:
             raise Exception("Failed :/")
 
-    print("ACCEPT!!!! :)")
 
 if __name__ == "__main__":
     print(INTRO)
@@ -217,20 +221,19 @@ if __name__ == "__main__":
     actions, gotos = load_table(slr)
     print("\n\nActions:")
     # print_actions(actions)
-    # print("\n\nGotos:")
+    print("\n\nGotos:")
     # print_gotos(gotos)
-    print_actions(gotos)
-
-    # print("Beginning to parse....\n")
-    # tree = parse(program, grammar, actions, gotos)
+    # print_actions(gotos)
     #
-    # if tree:
-    #     print("Input is syntactically correct!")
-    #     print("Parse Tree:")
-    #     tree.print("")
-    # else:
-    #     print("Code has syntax errors!")
+    print("Beginning to parse....\n")
+    tree = parse(program, grammar, actions, gotos)
 
+    if tree:
+        print("Input is syntactically correct!")
+        print("Parse Tree:")
+        tree.print("")
+    else:
+        print("Code has syntax errors!")
 
 # # returns the LHS (left hand side) of a given production
 # def get_lhs(production):

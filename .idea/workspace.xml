@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="456d8450-1e65-411d-a58f-8ebab1c4a123" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sources/eof_exp.pas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sources/ident_exp.pas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sources/lit_exp.pas" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sources/missing_var.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/token.py" beforeDir="false" afterPath="$PROJECT_DIR$/token.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44810745">
+    <splitter split-orientation="horizontal" split-proportion="0.34078807">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -31,11 +27,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="487">
-                  <caret line="112" column="21" lean-forward="true" selection-start-line="112" selection-start-column="21" selection-end-line="112" selection-end-column="21" />
+                <state relative-caret-position="112">
+                  <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="98" />
                 </state>
               </provider>
             </entry>
@@ -43,7 +39,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lex.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="469">
+                <state relative-caret-position="1769">
                   <caret line="102" column="32" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
                   <folding>
                     <element signature="e#99#109#0" expanded="true" />
@@ -61,11 +57,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/slr.csv">
               <provider selected="true" editor-type-id="csv-text-editor">
                 <state>
-                  <caret column="108" selection-start-column="108" selection-end-column="108" />
+                  <caret column="100" selection-start-column="72" selection-end-column="100" />
                 </state>
               </provider>
               <provider editor-type-id="csv-table-editor">
@@ -82,14 +78,14 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="205">
-                  <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
+                <state relative-caret-position="294">
+                  <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
-                    <marker date="1569223459868" expanded="true" signature="6272:6354" ph="..." />
+                    <marker date="1569224888427" expanded="true" signature="6304:6384" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -149,11 +145,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/token.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="495">
-                  <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+                <state>
+                  <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
                 </state>
               </provider>
             </entry>
@@ -201,7 +197,6 @@
         <option value="$PROJECT_DIR$/slr2.csv" />
         <option value="$PROJECT_DIR$/grammar.txt" />
         <option value="$PROJECT_DIR$/slr.csv" />
-        <option value="$PROJECT_DIR$/token.py" />
         <option value="$PROJECT_DIR$/lex.py" />
         <option value="$PROJECT_DIR$/tree.py" />
         <option value="$PROJECT_DIR$/sources/missing_var.pas" />
@@ -210,12 +205,15 @@
         <option value="$PROJECT_DIR$/sources/eof_exp.pas" />
         <option value="$PROJECT_DIR$/sources/ident_exp.pas" />
         <option value="$PROJECT_DIR$/parser.py" />
+        <option value="$PROJECT_DIR$/token.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="width" value="1680" />
-    <option name="height" value="1050" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="x" value="1680" />
+    <option name="y" value="-392" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -288,18 +286,18 @@
       <workItem from="1569011029084" duration="13037000" />
       <workItem from="1569100869596" duration="17000" />
       <workItem from="1569100898348" duration="94000" />
-      <workItem from="1569101001926" duration="11465000" />
+      <workItem from="1569101001926" duration="13035000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24613000" />
+    <option name="totallyTimeSpent" value="26183000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
+    <frame x="1680" y="-392" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.17826618" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.17784877" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -324,16 +322,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/token.py</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/design/sources/source15.pas">
@@ -409,33 +397,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/slr.csv">
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state>
-          <caret column="108" selection-start-column="108" selection-end-column="108" />
-        </state>
-      </provider>
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="102" column="32" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
-          <folding>
-            <element signature="e#99#109#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/token.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tree.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -457,13 +418,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="5" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sources/lit_exp.pas">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -490,8 +444,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="112" column="21" lean-forward="true" selection-start-line="112" selection-start-column="21" selection-end-line="112" selection-end-column="21" />
+        <state relative-caret-position="294">
+          <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <marker date="1569224888427" expanded="true" signature="6304:6384" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sources/lit_exp.pas">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1769">
+          <caret line="102" column="32" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
+          <folding>
+            <element signature="e#99#109#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/slr.csv">
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state>
+          <caret column="100" selection-start-column="72" selection-end-column="100" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/token.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" lean-forward="true" selection-start-column="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
