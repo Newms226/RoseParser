@@ -56,33 +56,19 @@ def load_grammar(input):
     grammar[2] = (lhs, ["EXPR", ";", "STMT"])  # TODO THIS IS SOOO BAD :(
     return grammar
 
-# def _prepare_headers():
-#     to_pop = ["boolean", "integer"]
-#     for invalid in to_pop:
-#         lookup.pop(invalid)
-#
-#     add = {
-#         "id"
-#     }
-#     lookup.update()
-#
-# def _tokenize(feild):
-#
-
-
 
 # reads the given input containing an SLR parsing table and returns the "actions" and "gotos" as dictionaries
 def load_table(input):
     actions = []
     gotos = []
     headers = input.readline().strip().split(",")
-    end = headers.index("EOF")
+    end = headers.index("$")
     tokens = []
-    for field in headers[:end + 1]:
-        tokens.append(lookup[field.lower()])
+    for field in headers[1:end + 1]:
+        tokens.append(Token[field])
         # tokens.append(int(field))
     print(tokens)
-    variables = headers[end:]
+    variables = headers[end + 1:]
 
     # for i in range(tokens):
     #     actions ++ [{}
@@ -94,19 +80,19 @@ def load_table(input):
         state = int(row[0])
         # print(f"parsing line {line}")
         actions[state].update({Token.EOF: None})
-        assert Token.EOF in actions[state]
+        # assert Token.EOF in actions[state]
         for i, token in enumerate(tokens):
             # key = (state, token)
             value = row[i + 1]
-            if len(value) == 0:
-                value = None
-            actions[state].update({token: value})
+            if len(value) != 0:
+                # value = None
+                actions[state].update({token: value})
         for i, variable in enumerate(variables):
             # key = (state, variable)
-            value = row[i + len(tokens)]
-            if len(value) == 0:
-                value = None
-            gotos[state].update({variable: value})
+            value = row[i + len(tokens) + 1]
+            if len(value) != 0:
+                # value = None
+                gotos[state].update({variable: value})
     return actions, gotos
 
 
@@ -159,16 +145,15 @@ def parse(input, grammar, actions, gotos):
         print(f"stack: {stack} \n  current token: {token}")
 
         # TODO what should we do if NONE is returned? IE: When EOF is reached
-
-        action = actions[state][token]
-        print(f"  action: {action}")
-
-        if action is None:
+        if token in actions[state]:
+            action = actions[state][token]
+            print(f"  action: {action}")
+        else:
             examine_error(actions, state, token, lexeme)
             return None
 
         # shift operation
-        elif action[0] == 's':
+        if action[0] == 's':
             # input.pop(0)
             stack.append(token)
             state = int(action[1:])
