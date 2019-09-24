@@ -147,6 +147,8 @@ def examine_error(actions, state, token, lexme, flags=[]):
         raise Errors.NO_TYPE
     elif filtered == {Token.VAR, Token.BEGIN}:
         raise Errors.NO_SPECIAL_WORD
+    elif filtered == {Token.EOF}:
+        raise Errors.EOF_EXPECTED
     elif Flags.LEX_ERROR in flags:
         raise Errors.LEX_ERROR
     else:
