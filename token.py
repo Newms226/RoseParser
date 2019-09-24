@@ -1,12 +1,19 @@
 from enum import Enum
 
 
+class TokenCategory(Enum):
+    LITERAL = 0
+    KEY_WORD = 1
+    OPERATOR = 2
+    SYMBOL = 3
+    TYPE = 4
+
 class Token(Enum):
-    ADDITION = 1
-    ASSIGNMENT = 2
-    BEGIN = 3
-    BOOLEAN_TYPE = 4
-    COLON = 5
+    ADDITION = 1, TokenCategory.OPERATOR
+    ASSIGNMENT = 2, TokenCategory.OPERATOR
+    BEGIN = 3, TokenCategory.KEY_WORD
+    BOOLEAN_TYPE = 4, TokenCategory.TYPE
+    COLON = 5, TokenCategory.SYMBOL
     DO = 6
     ELSE = 7
     END = 8
@@ -32,6 +39,4 @@ class Token(Enum):
     WHILE = 28
     WRITE = 29
     EOF = 30
-
-
 

@@ -21,6 +21,8 @@ Reading from grammar file: {}
 Reading from SLR table file: {}
 """
 
+class Flags(Enum):
+    LEX_ERROR = 0
 
 def read_file(path, error):
     abs_path = os.path.abspath(path)
@@ -53,7 +55,7 @@ def load_grammar(input):
             grammar.append((lhs, rhs))
 
     lhs, _ = grammar[2]
-    grammar[2] = (lhs, ["EXPR", ";", "STMT"])  # TODO THIS IS SOOO BAD :(
+    # grammar[2] = (lhs, ["EXPR", ";", "STMT"])  # TODO THIS IS SOOO BAD :(
     return grammar
 
 
@@ -89,7 +91,7 @@ def load_table(input):
             value = row[i + 1]
             if len(value) != 0:
                 if '/' in value:
-                    value = Errors.BAD_SLR
+                    value = Flags.LEX_ERROR
                     # raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
                 # value = None
                 actions[state].update({token: value})
@@ -118,24 +120,48 @@ def _gen_dict(actions):
 def print_dict(actions):
     for line in _gen_dict(actions):
         print(line)
+#
+#
+# error_lookup = {
+#     :
+#         Errors.NO_IDENT,
+#     :
+#         Errors.NO_IDENT_OR_LIT
+#     # {}
+#
+#
+# }
 
 
-def examine_error(actions, state, token, lexme):
+def examine_error(actions, state, token, lexme, flags=[]):
     # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
-    filtered = actions[state].keys()
-    print(f"\nERROR LIKELY. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
-          f"\nPOSSIBLE RECOVERY:\n  {filtered}\n")
+    filtered = set(actions[state].keys())
+    print(f"\nERROR. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
+          f"\nPOSSIBLE RECOVERY FROM STATE {state}:\n  {filtered}\n")
 
-    if filtered == [Token.IDENTIFIER]:
+    if filtered == {Token.IDENTIFIER}:
         raise Errors.NO_IDENT
-    elif filtered == [Token.IDENTIFIER, Token.TRUE, Token.FALSE, Token.INTEGER_LITERAL]:
+    elif filtered == {Token.IDENTIFIER, Token.INTEGER_LITERAL, Token.TRUE, Token.FALSE}:
         raise Errors.NO_IDENT_OR_LIT
-    elif token == Errors.BAD_SLR:
-        raise Errors.BAD_SLR
+    elif filtered == {Token.BOOLEAN_TYPE, Token.INTEGER_TYPE}:
+        raise Errors.NO_TYPE
+    elif filtered == {Token.VAR, Token.BEGIN}:
+        raise Errors.NO_SPECIAL_WORD
+    elif Flags.LEX_ERROR in flags:
+        raise Errors.LEX_ERROR
     else:
         raise Errors.SYNTAX_ERROR
 
     # names = [k.name for k in filtered]
+
+
+
+def print_stack(stack):
+    def _gen():
+        for i in stack:
+            yield i.name if isinstance(i, Token) else str(i)
+
+    print(", ".join(_gen()))
 
 
 def parse(input, grammar, actions, gotos):
@@ -146,15 +172,21 @@ def parse(input, grammar, actions, gotos):
     while not accept:
         state = stack[-1]
         input, lexeme, token = lex(input)
-        print(f"stack: {stack} \n  current token: {token}")
+        print(f"stack: ", end="")
+        print_stack(stack)
+        print(f"current token: {token} read from {lexeme}")
 
         # TODO what should we do if NONE is returned? IE: When EOF is reached
-        if token in actions[state] and token != Errors.BAD_SLR:
+        if token in actions[state]:
             action = actions[state][token]
             print(f"  action: {action}")
+            if action is Flags.LEX_ERROR:
+                examine_error(actions, state, token, lexeme, [Flags.LEX_ERROR])
+                # return None
+
         else:
             examine_error(actions, state, token, lexeme)
-            return None
+            # return None
 
         # shift operation
         if action[0] == 's':
@@ -168,13 +200,14 @@ def parse(input, grammar, actions, gotos):
         # reduce operation
         elif action[0] == 'r':
             lhs, rhs = grammar[int(action[1:])]
-            print(f"read rhs: {' '.join(rhs)}")
+            # print(f"read rhs: {' '.join(rhs)}")
             for i in range(len(rhs) * 2):
                 stack.pop()
-            print(f"new stack: {stack}")
+            # print(f"new stack: {stack}")
             state = stack[-1]
+
             stack.append(lhs)
-            print(f"reading state: {state}, lhs: {lhs}")
+            # print(f"reading state: {state}, lhs: {lhs}")
             stack.append(int(gotos[state][lhs]))
 
             new_tree = Tree(lhs)
@@ -243,6 +276,7 @@ if __name__ == "__main__":
     os.makedirs("./logs", exist_ok=True)
     _file_dump(gotos, "gotos")
     _file_dump(actions, "actions")
+
     # print(f"\n\nActions:")
     # print_dict(actions)
     # print(f"\n\nGotos:")

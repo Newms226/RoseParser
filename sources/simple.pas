@@ -1,0 +1,1 @@
+program simple var x : integer begin write 1; write 1 end .

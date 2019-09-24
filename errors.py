@@ -1,9 +1,10 @@
 
 from enum import Enum
 
-class Errors(Exception):
+class Errors(BaseException):
     MISSING_SOURCE = ValueError("ERROR 1: Source File Missing")
     SOURCE_ERROR = IOError("ERROR 2: Couldn't open source file")
+    LEX_ERROR = SyntaxError("ERROR 3: Lexical Error")
     MISSING_GRAMMAR = IOError("ERROR 4: Couldn't open grammar file")
     MISSING_SLR = IOError("ERROR 5: Missing SLR table file")
     EOF_EXPECTED = ValueError("ERROR 6: EOF expected")
@@ -15,8 +16,6 @@ class Errors(Exception):
     SYNTAX_ERROR = SyntaxError("ERROR 99: Syntax Error")
     BAD_SLR = SyntaxError("ERROR 98: Invalid SLR Construction")
 
-def gen_lex_problem(message=None):
-    init_msg = "ERROR 3: Lexical Error"
-    if message:
-        init_msg += ": " + message
-    return SyntaxError(message)
+
+
+

@@ -2,9 +2,8 @@
 # A Lexical Analyzer for an expression
 
 import sys
-
+from errors import Errors
 from enum import Enum
-from errors import gen_lex_problem
 from token import Token
 
 
@@ -75,7 +74,7 @@ def get_char(input):
     if c in [' ', '\n', '\t']:
         return c, CharClass.BLANK
     # else
-    raise gen_lex_problem(f"failed to get_char with c={c}")
+    raise Errors.LEX_ERROR
 
 
 # calls getChar and getChar until it returns a non-blank

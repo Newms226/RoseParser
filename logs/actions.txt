@@ -221,8 +221,8 @@ actions
 47:
   Token.IDENTIFIER: s28
 48:
-  Token.SEMICOLON: r6
-  Token.BEGIN: r6
+  Token.INTEGER_TYPE: s66
+  Token.BOOLEAN_TYPE: s67
 49:
   Token.IDENTIFIER: r8
   Token.COLON: r8
@@ -290,10 +290,19 @@ actions
   Token.SEMICOLON: r5
   Token.BEGIN: r5
 65:
+  Token.SEMICOLON: r6
+  Token.BEGIN: r6
+66:
+  Token.SEMICOLON: r9
+  Token.BEGIN: r9
+67:
+  Token.SEMICOLON: r10
+  Token.BEGIN: r10
+68:
   Token.SEMICOLON: r26
   Token.END: r26
-  Token.ELSE: ERROR 98: Invalid SLR Construction
-66:
+  Token.ELSE: s78
+69:
   Token.SEMICOLON: r43
   Token.END: r43
   Token.THEN: r43
@@ -301,7 +310,7 @@ actions
   Token.DO: r43
   Token.ADDITION: s60
   Token.SUBTRACTION: s61
-67:
+70:
   Token.SEMICOLON: r44
   Token.END: r44
   Token.THEN: r44
@@ -309,7 +318,7 @@ actions
   Token.DO: r44
   Token.ADDITION: s60
   Token.SUBTRACTION: s61
-68:
+71:
   Token.SEMICOLON: r45
   Token.END: r45
   Token.THEN: r45
@@ -317,7 +326,7 @@ actions
   Token.DO: r45
   Token.ADDITION: s60
   Token.SUBTRACTION: s61
-69:
+72:
   Token.SEMICOLON: r46
   Token.END: r46
   Token.THEN: r46
@@ -325,7 +334,7 @@ actions
   Token.DO: r46
   Token.ADDITION: s60
   Token.SUBTRACTION: s61
-70:
+73:
   Token.SEMICOLON: r47
   Token.END: r47
   Token.THEN: r47
@@ -333,7 +342,7 @@ actions
   Token.DO: r47
   Token.ADDITION: s60
   Token.SUBTRACTION: s61
-71:
+74:
   Token.SEMICOLON: r31
   Token.END: r31
   Token.THEN: r31
@@ -347,7 +356,7 @@ actions
   Token.EQUAL: r31
   Token.LESS_EQUAL: r31
   Token.LESS: r31
-72:
+75:
   Token.SEMICOLON: r32
   Token.END: r32
   Token.THEN: r32
@@ -361,7 +370,7 @@ actions
   Token.EQUAL: r32
   Token.LESS_EQUAL: r32
   Token.LESS: r32
-73:
+76:
   Token.SEMICOLON: r34
   Token.END: r34
   Token.THEN: r34
@@ -375,18 +384,18 @@ actions
   Token.EQUAL: r34
   Token.LESS_EQUAL: r34
   Token.LESS: r34
-74:
+77:
   Token.SEMICOLON: r28
   Token.END: r28
   Token.ELSE: r28
-75:
+78:
   Token.IDENTIFIER: s20
   Token.BEGIN: s6
   Token.READ: s21
   Token.WRITE: s22
   Token.IF: s23
   Token.WHILE: s24
-76:
+79:
   Token.SEMICOLON: r27
   Token.END: r27
   Token.ELSE: r27
