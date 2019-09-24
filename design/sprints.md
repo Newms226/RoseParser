@@ -1,7 +1,5 @@
-- Get Symbol Missing working
-- make changes to lexical analyzer
-    * CharClass corrections!
-- read through the rubric &
+- Use encapsulation to:
+    * stop pushing the lexeme back onto the input everytime you do a reduce
 
 # After submission
 - Elixir?
