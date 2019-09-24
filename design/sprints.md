@@ -1,7 +1,7 @@
-- re-write grammar in valid form
-- get source 1-3 working
-- validate thinking on error table
-- update error table
+- Get Symbol Missing working
+- make changes to lexical analyzer
+    * CharClass corrections!
+- read through the rubric &
 
 # After submission
 - Elixir?

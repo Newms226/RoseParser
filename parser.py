@@ -90,10 +90,10 @@ def load_table(input):
             # key = (state, token)
             value = row[i + 1]
             if len(value) != 0:
-                if '/' in value:
-                    value = Flags.LEX_ERROR
-                    # raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
-                # value = None
+                # if '/' in value:
+                #     value = Flags.LEX_ERROR
+                #     # raise Exception(f"Invalid table construction. Found {value} at {i +1} in {line}")
+                # # value = None
                 actions[state].update({token: value})
         for i, variable in enumerate(variables):
             # key = (state, variable)
@@ -133,7 +133,7 @@ def print_dict(actions):
 # }
 
 
-def examine_error(actions, state, token, lexme, flags=[]):
+def examine_error(actions, state, token, lexme):
     # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
     filtered = set(actions[state].keys())
     print(f"\nERROR. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
@@ -149,8 +149,10 @@ def examine_error(actions, state, token, lexme, flags=[]):
         raise Errors.NO_SPECIAL_WORD
     elif filtered == {Token.EOF}:
         raise Errors.EOF_EXPECTED
-    elif Flags.LEX_ERROR in flags:
-        raise Errors.LEX_ERROR
+    elif filtered == {Token.ASSIGNMENT}:
+        raise Errors.NO_SYMBOL
+    elif filtered == {Token.LESS, Token.EQUAL, Token.ADDITION, Token.SUBTRACTION, Token.LESS_EQUAL, Token.GREATER_EQUAL, Token.GREATER}:
+        raise Errors.NO_SYMBOL
     else:
         raise Errors.SYNTAX_ERROR
 
@@ -182,10 +184,6 @@ def parse(input, grammar, actions, gotos):
         if token in actions[state]:
             action = actions[state][token]
             print(f"  action: {action}")
-            if action is Flags.LEX_ERROR:
-                examine_error(actions, state, token, lexeme, [Flags.LEX_ERROR])
-                # return None
-
         else:
             examine_error(actions, state, token, lexeme)
             # return None
