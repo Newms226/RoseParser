@@ -1,4 +1,4 @@
-actions
+ACTIONS:
 
 0:
   Token.PROGRAM: s1
