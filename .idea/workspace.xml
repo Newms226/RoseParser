@@ -2,27 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="456d8450-1e65-411d-a58f-8ebab1c4a123" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/old/parser.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/old/syntax.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rose_parser/lex.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rose_parser/lookup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rose_parser/parser.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rose_parser/syntax.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/context.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_basic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RoseParser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RoseParser.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/erl_crash.dump" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/rose_parser/errors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lex.py" beforeDir="false" afterPath="$PROJECT_DIR$/old/lex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/actions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs/actions.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/gotos.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs/gotos.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/syntax.py" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/token.py" beforeDir="false" afterPath="$PROJECT_DIR$/rose_parser/token.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/rose_parser/tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rose_parser/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/rose_parser/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rose_parser/syntax.py" beforeDir="false" afterPath="$PROJECT_DIR$/rose_parser/syntax.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,18 +29,6 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/old/parser.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1150">
-                  <caret line="164" column="14" lean-forward="true" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
-                  <folding>
-                    <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/rose_parser/lex.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="420">
@@ -70,14 +40,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/old/lex.py">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-586">
-                  <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
-                  <folding>
-                    <element signature="e#99#109#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="45">
+                  <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
                 </state>
               </provider>
             </entry>
@@ -86,11 +53,20 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/grammar.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="385">
+                  <caret line="35" column="30" lean-forward="true" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/rose_parser/parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1438">
-                  <caret line="146" column="48" selection-start-line="146" selection-start-column="48" selection-end-line="146" selection-end-column="48" />
+                <state relative-caret-position="610">
+                  <caret line="154" column="80" selection-start-line="154" selection-start-column="80" selection-end-line="154" selection-end-column="80" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -99,10 +75,24 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/logs/actions.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="730">
+                  <caret line="392" column="16" selection-start-line="392" selection-start-column="16" selection-end-line="392" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/logs/GRAMMAR.txt">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/rose_parser/syntax.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1189">
-                  <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+                <state relative-caret-position="1340">
+                  <caret line="116" column="30" selection-start-line="116" selection-start-column="30" selection-end-line="116" selection-end-column="30" />
                   <folding>
                     <element signature="e#0#21#0" expanded="true" />
                   </folding>
@@ -146,6 +136,7 @@
       <find>add</find>
       <find>Errors</find>
       <find>input</find>
+      <find>stack</find>
     </findStrings>
     <replaceStrings>
       <replace>errors</replace>
@@ -186,14 +177,14 @@
         <option value="$PROJECT_DIR$/tests/context.py" />
         <option value="$PROJECT_DIR$/tests/test_basic.py" />
         <option value="$PROJECT_DIR$/old/lex.py" />
-        <option value="$PROJECT_DIR$/parser.py" />
         <option value="$PROJECT_DIR$/rose_parser/lookup.py" />
         <option value="$PROJECT_DIR$/rose_parser/errors.py" />
         <option value="$PROJECT_DIR$/rose_parser/tree.py" />
         <option value="$PROJECT_DIR$/rose_parser/lex.py" />
         <option value="$PROJECT_DIR$/old/parser.py" />
-        <option value="$PROJECT_DIR$/rose_parser/syntax.py" />
+        <option value="$PROJECT_DIR$/parser.py" />
         <option value="$PROJECT_DIR$/rose_parser/parser.py" />
+        <option value="$PROJECT_DIR$/rose_parser/syntax.py" />
       </list>
     </option>
   </component>
@@ -216,7 +207,7 @@
             <path>
               <item name="RoseParser" type="b2602c69:ProjectViewProjectNode" />
               <item name="RoseParser" type="462c0819:PsiDirectoryNode" />
-              <item name="rose_parser" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,7 +262,7 @@
       <workItem from="1569232110904" duration="16031000" />
       <workItem from="1569317746743" duration="494000" />
       <workItem from="1569353099496" duration="410000" />
-      <workItem from="1569354230538" duration="9580000" />
+      <workItem from="1569354230538" duration="12666000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' into dev&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;parser.py">
       <created>1569232120096</created>
@@ -284,12 +275,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54602000" />
+    <option name="totallyTimeSpent" value="57688000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20879121" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.20879121" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -323,9 +315,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' into dev&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;parser.py" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sources/source11.pas">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/sources/source8.pas">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -487,13 +476,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logs/actions.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="392" column="16" selection-start-line="392" selection-start-column="16" selection-end-line="392" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/slr.csv">
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="396">
@@ -511,13 +493,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grammar.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="42" column="15" selection-end-line="67" />
         </state>
       </provider>
     </entry>
@@ -562,13 +537,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.zshenv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -606,26 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rose_parser/lex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rose_parser/syntax.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1189">
-          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rose_parser/errors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -640,12 +588,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rose_parser/lex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grammar.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="35" column="30" lean-forward="true" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/actions.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="730">
+          <caret line="392" column="16" selection-start-line="392" selection-start-column="16" selection-end-line="392" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/GRAMMAR.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/rose_parser/parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1438">
-          <caret line="146" column="48" selection-start-line="146" selection-start-column="48" selection-end-line="146" selection-end-column="48" />
+        <state relative-caret-position="610">
+          <caret line="154" column="80" selection-start-line="154" selection-start-column="80" selection-end-line="154" selection-end-column="80" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rose_parser/syntax.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1340">
+          <caret line="116" column="30" selection-start-line="116" selection-start-column="30" selection-end-line="116" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>

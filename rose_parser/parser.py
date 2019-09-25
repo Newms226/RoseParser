@@ -53,7 +53,6 @@ def _load_grammar(input):
 
     return grammar
 
-
 def _load_table(input):
     actions = []
     gotos = []
@@ -133,7 +132,9 @@ def main():
 
     grammar = _load_grammar(grammar)
     actions, gotos = _load_table(slr)
-    program = source.read()  # read program as string
+
+    # read program as string
+    program = source.read()
     source.close()
 
     _log(grammar, actions, gotos)
@@ -142,14 +143,22 @@ def main():
               "gotos, actions, and grammar. \nPress enter to continue")
     print("Beginning to parse...\n\n")
 
-    tree = syntax.parse(program, grammar, actions, gotos)
+    tree, frames = syntax.parse(program, grammar, actions, gotos)
 
     if tree:
-        print("Input is syntactically correct!")
-        print("\nParse Tree:")
-        tree.print("")
+        print("Input is syntactically correct!\n\n")
+
+        i = input("Would you like to view the parse tree? ('y' to accept)\n>")
+        if i == 'y':
+            tree.print("")
+
+        i = input("\nWould you like to view the parse frames? ('y' to accept)\n>")
+        if i == 'y':
+            for frame in frames:
+                syntax._print_frame(frame)
     else:
         print("Code has syntax errors!")
+
 
 
 if __name__ == "__main__":

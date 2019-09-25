@@ -4,12 +4,13 @@ from token import Token
 import errors
 
 
-def print_stack(stack):
-    def _gen():
-        for i in stack:
-            yield i.name if isinstance(i, Token) else str(i)
+def _stack_to_str(stack):
+    for i in stack:
+        yield i.name if isinstance(i, Token) else str(i)
 
-    print(", ".join(_gen()))
+
+def print_stack(stack):
+    print(", ".join(_stack_to_str(stack)))
 
 
 def examine_error(actions, state, token, lexme):
@@ -20,7 +21,8 @@ def examine_error(actions, state, token, lexme):
 
     if filtered == {Token.IDENTIFIER}:
         raise errors.NO_IDENT
-    elif filtered == {Token.IDENTIFIER, Token.INTEGER_LITERAL, Token.TRUE, Token.FALSE}:
+    elif filtered == {Token.IDENTIFIER, Token.INTEGER_LITERAL, Token.TRUE,
+                      Token.FALSE}:
         raise errors.NO_IDENT_OR_LIT
     elif filtered == {Token.BOOLEAN_TYPE, Token.INTEGER_TYPE}:
         raise errors.NO_TYPE
@@ -30,29 +32,42 @@ def examine_error(actions, state, token, lexme):
         raise errors.EOF_EXPECTED
     elif filtered == {Token.ASSIGNMENT}:
         raise errors.NO_SYMBOL
-    elif filtered == {Token.LESS, Token.EQUAL, Token.ADDITION, Token.SUBTRACTION, Token.LESS_EQUAL, Token.GREATER_EQUAL, Token.GREATER}:
+    elif filtered == {Token.LESS, Token.EQUAL, Token.ADDITION,
+                      Token.SUBTRACTION, Token.LESS_EQUAL, Token.GREATER_EQUAL,
+                      Token.GREATER}:
         raise errors.NO_SYMBOL
     else:
         raise errors.SYNTAX_ERROR
 
 
+def _print_frame(frame):
+    lexeme, token, stack, action = frame
+    print(f"stack: ", end="")
+    print_stack(stack)
+    print(f"current token: {token} read from {lexeme}")
+    print(f"  action: {action}")
+
+
 def parse(input, grammar, actions, gotos):
     trees = []
-    stack = [0]
+    stack = [0]  # TODO
     lexer = Lexer(input)
+    frames = []
 
     while True:
-        state = stack[-1]
+        state = stack[-1] # TODO
         lexeme, token = lexer.cur
-        print(f"stack: ", end="")
-        print_stack(stack)
-        print(f"current token: {token} read from {lexeme}")
+        # print(f"stack: ", end="")
+        # print_stack(stack)
+        # print(f"current token: {token} read from {lexeme}")
 
         if token in actions[state]:
             action = actions[state][token]
-            print(f"  action: {action}")
+            # print(f"  action: {action}")
         else:
             examine_error(actions, state, token, lexeme)
+
+        frames.append((lexeme, token, stack.copy(), action)) # TODO: Move to stack
 
         # shift operation
         if action[0] == 's':
@@ -96,7 +111,7 @@ def parse(input, grammar, actions, gotos):
                 root.add(tree)
 
             # TODOd #8: return the new tree
-            return root
+            return root, frames
 
         else:
-            raise errors.with_msg(errors.BAD_SLR, "Bottomed out in syntax.py")
+            raise SyntaxError("Bottomed out in syntax.py")
