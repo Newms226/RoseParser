@@ -23,6 +23,18 @@ Reading from grammar file: {}
 Reading from SLR table file: {}
 """
 
+shift_reduce_conflict_template = """
+SHIFT REDUCE CONFLICT
+
+Found a shift reduce conflict in state row {} for token {}
+Shift: {}
+Reduce: {}
+
+Would you like to reduce? ('r')
+Or shift? ('s')
+>>>
+"""
+
 
 def _open_file(path, error=None):
     abs_path = os.path.abspath(path)
@@ -53,6 +65,28 @@ def _load_grammar(input):
 
     return grammar
 
+
+def examine_shift_reduce_conflict(value, token, state):
+    shift, reduce = value.split('/')
+    if shift[0] != 's' or reduce[0] != 'r':
+        raise Exception(f"Invalid shift/reduction pair: {value}")
+
+    msg = shift_reduce_conflict_template.format(state, token, shift, reduce)
+
+    while True:
+        response = input(msg)
+        if response == 'r':
+            to_return = reduce
+            break
+        elif response == 's':
+            to_return = shift
+            break
+        else:
+            print(f"Invalid input `{response}`, try again")
+
+    return to_return
+
+
 def _load_table(input):
     actions = []
     gotos = []
@@ -80,13 +114,15 @@ def _load_table(input):
         for i, token in enumerate(tokens):
             value = row[i + 1]
             if len(value) != 0:
-                actions[state].update({token: value})
+                if '/' in value:
+                    value = examine_shift_reduce_conflict(value, token, i + 1)
+                actions[state][token] = value
 
         # Extract the goto table
         for i, variable in enumerate(variables):
             value = row[i + len(tokens) + 1]
             if len(value) != 0:
-                gotos[state].update({variable: value})
+                gotos[state][variable] = int(value)
 
     return actions, gotos
 
@@ -143,22 +179,20 @@ def main():
               "gotos, actions, and grammar. \nPress enter to continue")
     print("Beginning to parse...\n\n")
 
-    tree, frames = syntax.parse(program, grammar, actions, gotos)
+    tree, stack = syntax.parse(program, grammar, actions, gotos)
 
     if tree:
         print("Input is syntactically correct!\n\n")
 
-        i = input("Would you like to view the parse tree? ('y' to accept)\n>")
+        i = input("Would you like to view the parse tree? ('y' to accept)\n")
         if i == 'y':
             tree.print("")
 
-        i = input("\nWould you like to view the parse frames? ('y' to accept)\n")
+        i = input("Would you like to view the parse frames? ('y' to accept)\n")
         if i == 'y':
-            for frame in frames:
-                syntax._print_frame(frame)
+            print(str(stack))
     else:
         print("Code has syntax errors!")
-
 
 
 if __name__ == "__main__":

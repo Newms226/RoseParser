@@ -1,3 +1,3 @@
-import parser
+import rose_parser.parser
 
-parser.main()
+rose_parser.parser.main()

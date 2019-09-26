@@ -1,35 +1,37 @@
 from tree import Tree
+from stack import Stack
 from lex import Lexer
 from token import Token
 import errors
 
 
-def _stack_to_str(stack):
-    for i in stack:
-        yield i.name if isinstance(i, Token) else str(i)
+#
+# def print_stack(stack):
+#     print(", ".join(_stack_to_str(stack)))
+
+err_template = """
+ERROR: {}
+
+STATE: {}, TOKEN: {}, LEXEME: {}
+POSSIBLE RECOVERY FROM STATE {}:
+   {}
+   
+Would you like to see the stack? ('y' for yes)
+>>>
+"""
 
 
-def print_stack(stack):
-    print(", ".join(_stack_to_str(stack)))
-
-
-def examine_error(actions, state, token, lexme):
+def examine_error(actions, state, token, lexeme, stack):
     # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
     filtered = set(actions[state].keys())
     err = _filtered_to_error(filtered)
 
-    msg = f"""
-    ERROR: {err}
-    
-    STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}
-    POSSIBLE RECOVERY FROM STATE {state}:
-       {filtered}
-       
-    Would you like to see the satck? ('y' for yes)
-    """
-
+    msg = err_template.format(err, state, token.name, lexeme, state, filtered)
     response = input(msg)
+    if response == 'y':
+        print(str(stack))
 
+    raise err
 
 
 def _filtered_to_error(filtered):
@@ -51,44 +53,42 @@ def _filtered_to_error(filtered):
                       Token.GREATER}:
         return errors.NO_SYMBOL
     else:
-        return None
+        return errors.SYNTAX_ERROR
 
 
-def _print_frame(frame):
-    lexeme, token, stack, action = frame
-    print(f"stack: ", end="")
-    print_stack(stack)
-    print(f"current token: {token} read from {lexeme}")
-    print(f"  action: {action}")
+# def _print_frame(frame):
+#     lexeme, token, stack, action = frame
+#     print(f"stack: ", end="")
+#     print_stack(stack)
+#     print(f"current token: {token} read from {lexeme}")
+#     print(f"  action: {action}")
 
 
 def parse(input, grammar, actions, gotos):
     trees = []
-    stack = [0]  # TODO
+    stack = Stack()
     lexer = Lexer(input)
-    frames = []
 
     while True:
-        state = stack[-1] # TODO
+        state = stack.get(-1)
         lexeme, token = lexer.cur
-        # print(f"stack: ", end="")
-        # print_stack(stack)
-        # print(f"current token: {token} read from {lexeme}")
 
         if token in actions[state]:
             action = actions[state][token]
             # print(f"  action: {action}")
         else:
-            examine_error(actions, state, token, lexeme)
+            examine_error(actions, state, token, lexeme, stack)
 
-        frames.append((lexeme, token, stack.copy(), action)) # TODO: Move to stack
+        # print(stack._frames[-1])
+        # print(f"new action: {action}")
 
         # shift operation
+        # noinspection PyUnboundLocalVariable
         if action[0] == 's':
-            stack.append(token)
+            stack.append_token(token, lexeme, action, state)
 
             state = int(action[1:])
-            stack.append(state)
+            stack.append_state(state)
 
             tree = Tree(token)
             trees.append(tree)
@@ -98,14 +98,11 @@ def parse(input, grammar, actions, gotos):
         # reduce operation
         elif action[0] == 'r':
             lhs, rhs = grammar[int(action[1:])]
-            # print(f"read rhs: {' '.join(rhs)}")
-            for i in range(len(rhs) * 2):
-                stack.pop()
-            # print(f"new stack: {stack}")
-            state = stack[-1]
+            stack.reduce(lhs, rhs)
 
-            stack.append(lhs)
-            stack.append(int(gotos[state][lhs]))
+            state = stack.get(-1)
+            stack.append_token(lhs, lexeme, action, state)
+            stack.append_state(int(gotos[state][lhs]))
 
             new_tree = Tree(lhs)
             for tree in trees[-len(rhs):]:
@@ -125,7 +122,7 @@ def parse(input, grammar, actions, gotos):
                 root.add(tree)
 
             # TODOd #8: return the new tree
-            return root, frames
+            return root, stack
 
         else:
             raise SyntaxError("Bottomed out in syntax.py")
