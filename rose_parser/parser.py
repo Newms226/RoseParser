@@ -152,7 +152,7 @@ def main():
         if i == 'y':
             tree.print("")
 
-        i = input("\nWould you like to view the parse frames? ('y' to accept)\n>")
+        i = input("\nWould you like to view the parse frames? ('y' to accept)\n")
         if i == 'y':
             for frame in frames:
                 syntax._print_frame(frame)
