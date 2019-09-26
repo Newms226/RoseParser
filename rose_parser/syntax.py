@@ -16,28 +16,42 @@ def print_stack(stack):
 def examine_error(actions, state, token, lexme):
     # err_lookup = {Token.IDENTIFIER.name: "Identifier expected"}
     filtered = set(actions[state].keys())
-    print(f"\nERROR. STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}"
-          f"\nPOSSIBLE RECOVERY FROM STATE {state}:\n  {filtered}\n")
+    err = _filtered_to_error(filtered)
 
+    msg = f"""
+    ERROR: {err}
+    
+    STATE: {state}, TOKEN: {token.name}, LEXEME: {lexme}
+    POSSIBLE RECOVERY FROM STATE {state}:
+       {filtered}
+       
+    Would you like to see the satck? ('y' for yes)
+    """
+
+    response = input(msg)
+
+
+
+def _filtered_to_error(filtered):
     if filtered == {Token.IDENTIFIER}:
-        raise errors.NO_IDENT
+        return errors.NO_IDENT
     elif filtered == {Token.IDENTIFIER, Token.INTEGER_LITERAL, Token.TRUE,
                       Token.FALSE}:
-        raise errors.NO_IDENT_OR_LIT
+        return errors.NO_IDENT_OR_LIT
     elif filtered == {Token.BOOLEAN_TYPE, Token.INTEGER_TYPE}:
-        raise errors.NO_TYPE
+        return errors.NO_TYPE
     elif filtered == {Token.VAR, Token.BEGIN}:
-        raise errors.NO_SPECIAL_WORD
+        return errors.NO_SPECIAL_WORD
     elif filtered == {Token.EOF}:
-        raise errors.EOF_EXPECTED
+        return errors.EOF_EXPECTED
     elif filtered == {Token.ASSIGNMENT}:
-        raise errors.NO_SYMBOL
+        return errors.NO_SYMBOL
     elif filtered == {Token.LESS, Token.EQUAL, Token.ADDITION,
                       Token.SUBTRACTION, Token.LESS_EQUAL, Token.GREATER_EQUAL,
                       Token.GREATER}:
-        raise errors.NO_SYMBOL
+        return errors.NO_SYMBOL
     else:
-        raise errors.SYNTAX_ERROR
+        return None
 
 
 def _print_frame(frame):
