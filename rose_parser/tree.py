@@ -9,8 +9,8 @@ class Tree:
     def add(self, child):
         self.children.append(child)
 
-    def print(self, tab = ""):
-        if self.data != None:
+    def print(self, tab):
+        if self.data is not None:
             print(tab + str(self.data))
             tab += Tree.TAB
             for child in self.children:

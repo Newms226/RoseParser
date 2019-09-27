@@ -1,1 +1,0 @@
-program source1 x = x + x .

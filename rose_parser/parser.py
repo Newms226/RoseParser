@@ -1,12 +1,94 @@
+"""A Left-Recursive, Top-Down Parser by Michael Newman
+
+Parser uses a list of grammar productions and a SLR lookup table to analyze the
+syntax of a given input program.
+
+Assumed directory structure:
+    ./
+    |- slr.csv
+    |- grammar.txt
+    |- rose_parser
+       |- parser.py
+       |- ...
+    |- ...
+
+SLR Machine can be generated from
+http://jsmachines.sourceforge.net/machines/slr.html
+
+Initial Code from Dr. Thyago Mota at the Metropolitan State University of
+Colorado.
+
+Project description located at `design/Prg01.docx`
+"""
+
+
 import os
 import sys
+import errors
 
 from lookup import lookup
-from templates import INTRO, INPUT, shift_reduce_conflict
+from templates import INTRO, INPUT, SHIFT_REDUCE_CONFLICT, MODE
 from token import Token
-from language import Language
-import errors
-import syntax
+from syntax import SyntaxAnalyzer
+
+
+def main():
+    print(INTRO)
+
+    if len(sys.argv) < 2:
+        raise errors.MISSING_SOURCE
+
+    program_path, source = _open_file(sys.argv[1], errors.MISSING_SOURCE)
+    grammar_path, grammar = _open_file("./grammar.txt", errors.MISSING_GRAMMAR)
+    slr_path, slr = _open_file('./slr.csv', errors.MISSING_SLR)
+
+    print(INPUT.format(program_path, grammar_path, slr_path))
+
+    grammar = _load_grammar(grammar)
+    actions, gotos = _load_table(slr)
+
+    # Log current config for de-bugging
+    path = f"./logs/grammar.txt"
+    with open(path, 'w') as file:
+        file.write("\n".join(_grammar_to_strs(grammar)))
+
+    path = f"./logs/gotos.txt"
+    with open(path, 'w') as file:
+        file.writelines("\n".join(_dict_to_strs(gotos)))
+
+    path = f"./logs/actions.txt"
+    with open(path, 'w') as file:
+        file.writelines("\n".join(_dict_to_strs(actions)))
+
+    # read source code input as string
+    source_str = source.read()
+    source.close()
+
+    # Analyze the code
+    analyzer = SyntaxAnalyzer(source_str, grammar, actions, gotos)
+    # while True:
+    #     response = input(MODE)
+    #     if response == 'i':
+    #         pass
+    #     elif response == 'r':
+    #         stack = analyzer.loop()
+    #         break
+    #     else:
+    #         print("Invalid input, try again")
+
+    print("Parsing...")
+    stack = analyzer.loop()
+    print("Input is syntactically correct!\n\n")
+
+    i = input("Would you like to view the parse tree? ('y' to accept)\n")
+    if i == 'y':
+        stack.get_frame(-1).cur_trees[0].print("")
+
+    i = input("Would you like to view the parse frames? ('y' to accept)\n")
+    if i == 'y':
+        print(str(stack))
+
+    print("Goodbye! ^.^")
 
 
 def _open_file(path, error=None):
@@ -39,12 +121,12 @@ def _load_grammar(input):
     return grammar
 
 
-def examine_shift_reduce_conflict(value, token, state):
+def _examine_shift_reduce_conflict(value, token, state):
     shift, reduce = value.split('/')
     if shift[0] != 's' or reduce[0] != 'r':
         raise Exception(f"Invalid shift/reduction pair: {value}")
 
-    msg = shift_reduce_conflict.format(state, token, shift, reduce)
+    msg = SHIFT_REDUCE_CONFLICT.format(state, token, shift, reduce)
 
     while True:
         response = input(msg)
@@ -88,7 +170,7 @@ def _load_table(input):
             value = row[i + 1]
             if len(value) != 0:
                 if '/' in value:
-                    value = examine_shift_reduce_conflict(value, token, i + 1)
+                    value = _examine_shift_reduce_conflict(value, token, i + 1)
                 actions[state][token] = value
 
         # Extract the goto table
@@ -108,55 +190,9 @@ def _dict_to_strs(list_o_dicts):
 
 
 def _grammar_to_strs(grammar):
-    for production in grammar:
+    for i, production in enumerate(grammar):
         lhs, rhs = production
-        yield f"{lhs} -> {' '.join(rhs)}"
-
-
-import json
-
-def main():
-    print(INTRO)
-
-    if len(sys.argv) < 2:
-        raise errors.MISSING_SOURCE
-
-    program_path, source = _open_file(sys.argv[1], errors.MISSING_SOURCE)
-    grammar_path, grammar = _open_file("./grammar.txt", errors.MISSING_GRAMMAR)
-    slr_path, slr = _open_file('./slr.csv', errors.MISSING_SLR)
-
-    print(INPUT.format(program_path, grammar_path, slr_path))
-
-    grammar = _load_grammar(grammar)
-    actions, gotos = _load_table(slr)
-
-    language =
-    path = f"./logs/lang_{time.time()}.json"
-    with open(path, 'w') as log_file:
-        json.dump(self.to_json(), log_file, indent=4)
-
-    # read source code input as string
-    source_input = source.read()
-    source.close()
-
-    source_input = input("Config loaded. Logs generated. See ./logs for "
-              "gotos, actions, and grammar. \nPress enter to continue")
-    print("Beginning to parse...\n\n")
-
-    tree, stack = syntax.parse(source_input, language)
-
-    if tree:
-        print("Input is syntactically correct!\n\n")
-
-        i = input("Would you like to view the parse tree? ('y' to accept)\n")
-        if i == 'y':
-            tree.print("")
-
-        i = input("Would you like to view the parse frames? ('y' to accept)\n")
-        if i == 'y':
-            print(str(stack))
-    else:
-        print("Code has syntax errors!")
+        yield f"{i}: {lhs} -> {' '.join(rhs)}"
 
 
 if __name__ == "__main__":

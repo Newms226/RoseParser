@@ -24,8 +24,11 @@ class Lexer:
         self._input = input
         self._read()
 
-    def pop(self):
-        self._read()
+    def pop(self): self._read()
+
+    def has_next(self):
+        _, char_class = get_char(self._input)
+        return self.cur is not None and char_class != CharClass.EOF
 
     def _read(self):
         _input, lexeme, token = lex(self._input)
