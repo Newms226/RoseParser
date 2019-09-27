@@ -2,38 +2,11 @@ import os
 import sys
 
 from lookup import lookup
+from templates import INTRO, INPUT, shift_reduce_conflict
 from token import Token
+from language import Language
 import errors
 import syntax
-
-INTRO = """
-Welcome to the RoseParser. 
-
-Built by Michael Newman from base code by Dr. Thyago Mota. This program expects
-the input source as the first command line argument. A non ambiguous, LR 
-grammar file is expected at './grammar.txt'. A valid SLR parse table is 
-expected at './slr.csv'.
-"""
-
-INPUT = """           
-Reading from source code file: {}
-
-Reading from grammar file: {}
-
-Reading from SLR table file: {}
-"""
-
-shift_reduce_conflict_template = """
-SHIFT REDUCE CONFLICT
-
-Found a shift reduce conflict in state row {} for token {}
-Shift: {}
-Reduce: {}
-
-Would you like to reduce? ('r')
-Or shift? ('s')
->>>
-"""
 
 
 def _open_file(path, error=None):
@@ -71,7 +44,7 @@ def examine_shift_reduce_conflict(value, token, state):
     if shift[0] != 's' or reduce[0] != 'r':
         raise Exception(f"Invalid shift/reduction pair: {value}")
 
-    msg = shift_reduce_conflict_template.format(state, token, shift, reduce)
+    msg = shift_reduce_conflict.format(state, token, shift, reduce)
 
     while True:
         response = input(msg)
@@ -140,19 +113,7 @@ def _grammar_to_strs(grammar):
         yield f"{lhs} -> {' '.join(rhs)}"
 
 
-def _log(grammar, actions, gotos):
-    def _file_dump(lines, name):
-        path = f"./logs/{name}.txt"
-        file = open(path, "w")
-        file.write(f"{name}:\n\n")
-        for line in lines:
-            file.write(line + "\n")
-
-    os.makedirs("./logs", exist_ok=True)
-    _file_dump(_dict_to_strs(gotos), 'GOTOS')
-    _file_dump(_dict_to_strs(actions), 'ACTIONS')
-    _file_dump(_grammar_to_strs(grammar), 'GRAMMAR')
-
+import json
 
 def main():
     print(INTRO)
@@ -169,17 +130,20 @@ def main():
     grammar = _load_grammar(grammar)
     actions, gotos = _load_table(slr)
 
-    # read program as string
-    program = source.read()
+    language =
+    path = f"./logs/lang_{time.time()}.json"
+    with open(path, 'w') as log_file:
+        json.dump(self.to_json(), log_file, indent=4)
+
+    # read source code input as string
+    source_input = source.read()
     source.close()
 
-    _log(grammar, actions, gotos)
-
-    _ = input("Config loaded. Logs generated. See ./logs for "
+    source_input = input("Config loaded. Logs generated. See ./logs for "
               "gotos, actions, and grammar. \nPress enter to continue")
     print("Beginning to parse...\n\n")
 
-    tree, stack = syntax.parse(program, grammar, actions, gotos)
+    tree, stack = syntax.parse(source_input, language)
 
     if tree:
         print("Input is syntactically correct!\n\n")

@@ -11,7 +11,6 @@ NO_SYMBOL = ValueError("ERROR 9: Symbol Missing")
 NO_TYPE = TypeError("ERROR 10: Data type expected")
 NO_IDENT_OR_LIT = TypeError("ERROR 11: Identifier or literal value expected")
 SYNTAX_ERROR = SyntaxError("ERROR 99: Syntax Error")
-BAD_SLR = SyntaxError("ERROR 98: Invalid SLR Construction")
 
 
 def with_msg(error, msg):

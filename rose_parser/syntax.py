@@ -64,65 +64,208 @@ def _filtered_to_error(filtered):
 #     print(f"  action: {action}")
 
 
+from language import Language
+
+
 def parse(input, grammar, actions, gotos):
     trees = []
     stack = Stack()
     lexer = Lexer(input)
 
     while True:
-        state = stack.get(-1)
+        state = stack.cur_state()
         lexeme, token = lexer.cur
 
         if token in actions[state]:
             action = actions[state][token]
-            # print(f"  action: {action}")
+            new_stack = act(action, stack.raw_stack())
+            stack.append_frame(lexeme, token, action, new_stack)
         else:
-            examine_error(actions, state, token, lexeme, stack)
+            examine_error(actions, stack.raw_stack())
 
-        # print(stack._frames[-1])
-        # print(f"new action: {action}")
 
-        # shift operation
-        # noinspection PyUnboundLocalVariable
+def act(action, raw_stack):
+    if action[o] == 's':
+        return shift()
+
+
+
+    # shift operation
+    # noinspection PyUnboundLocalVariable
+    if action[0] == 's':
+        stack.append_token(token, lexeme, action, state)
+
+        state = int(action[1:])
+        stack.append_state(state)
+
+        tree = Tree(token)
+        trees.append(tree)
+
+        lexer.pop()  # advances the input
+
+    # reduce operation
+    elif action[0] == 'r':
+        lhs, rhs = grammar[int(action[1:])]
+        state = stack.reduce(rhs)
+
+        stack.append_token(lhs, lexeme, action, state)
+        stack.append_state(int(gotos[state][lhs]))
+
+        new_tree = Tree(lhs)
+        for tree in trees[-len(rhs):]:
+            new_tree.add(tree)
+
+        trees = trees[:-len(rhs)]
+        trees.append(new_tree)
+
+    # not a shift or reduce operation, must be an "accept" operation
+    elif action == "acc":
+        lhs, rhs = grammar[0]
+
+        # TODOd #7: same as reduce but using the 1st rule of the grammar
+        root = Tree()
+        root.data = lhs
+        for tree in trees:
+            root.add(tree)
+
+        # TODOd #8: return the new tree
+        return root, stack
+
+    else:
+        raise SyntaxError("Bottomed out in syntax.py")
+
+        print(stack._frames[-1])
+
+
+class SyntaxAnalyzer:
+
+    def __init__(self, source_code, productions, actions, gotos):
+        self.productions = productions
+        self.actions = actions
+        self.gotos = gotos
+
+        self.stack = Stack()
+        self.lexer = Lexer(source_code)
+        self.trees = []
+
+
+
+    # def loop(self):
+    #     while self.lexer.has_next():
+    #         self.iterate()
+
+    def iterate(self):
+        state = self.stack.cur_state()
+        lexeme, token = self.lexer.cur
+
+        if token in self.actions[state][token]:
+            action = self.actions[state][token]
+            new_stack = self.act(action)
+            return self.stack.append_frame(lexeme, token, action, new_stack)
+        else:
+            self.examine_error()
+
+    def act(self, action):
         if action[0] == 's':
-            stack.append_token(token, lexeme, action, state)
-
-            state = int(action[1:])
-            stack.append_state(state)
-
-            tree = Tree(token)
-            trees.append(tree)
-
-            lexer.pop()
-
-        # reduce operation
+            new_state = int(action[1:])
+            return self.shift(new_state)
         elif action[0] == 'r':
-            lhs, rhs = grammar[int(action[1:])]
-            stack.reduce(lhs, rhs)
-
-            state = stack.get(-1)
-            stack.append_token(lhs, lexeme, action, state)
-            stack.append_state(int(gotos[state][lhs]))
-
-            new_tree = Tree(lhs)
-            for tree in trees[-len(rhs):]:
-                new_tree.add(tree)
-
-            trees = trees[:-len(rhs)]
-            trees.append(new_tree)
-
-        # not a shift or reduce operation, must be an "accept" operation
-        elif action == "acc":
-            lhs, rhs = grammar[0]
-
-            # TODOd #7: same as reduce but using the 1st rule of the grammar
-            root = Tree()
-            root.data = lhs
-            for tree in trees:
-                root.add(tree)
-
-            # TODOd #8: return the new tree
-            return root, stack
-
+            look_up = int(action[1:])
+            return self.reduce(look_up)
+        elif action == 'acc':
+            pass
         else:
-            raise SyntaxError("Bottomed out in syntax.py")
+            raise Exception()
+
+    def shift(self, new_state):
+        _, token = self.lexer.cur
+
+        self.trees.append(Tree(token))
+        self.lexer.pop()
+        return self.stack.raw_stack() + [token, new_state]
+
+    def reduce(self, look_up):
+        lhs, rhs = self.productions[look_up]
+
+        new_stack = self.stack.raw_stack()[:-len(rhs) * 2]
+        new_state = new_stack[-1]
+
+        new_tree = Tree(lhs)
+        for tree in self.trees[-len(rhs):]:
+            new_tree.add(tree)
+
+        self.trees = self.trees[:-len(rhs)] ++ [new_tree]
+
+        return
+
+    def _reduce_raw(self, rhs):
+
+
+    def examine_error(self):
+        raise Exception()
+
+
+
+
+# def parse(input, lang):
+#     trees = []
+#     stack = Stack()
+#     lexer = Lexer(input)
+#
+#     while True:
+#         state = stack.get(-1)
+#         lexeme, token = lexer.cur
+#
+#         if token in actions[state]:
+#             action = actions[state][token]
+#             _do_action(action, )
+#             # print(f"  action: {action}")
+#         else:
+#             examine_error(actions, stack)
+#
+#         # shift operation
+#         # noinspection PyUnboundLocalVariable
+#         if action[0] == 's':
+#             stack.append_token(token, lexeme, action, state)
+#
+#             state = int(action[1:])
+#             stack.append_state(state)
+#
+#             tree = Tree(token)
+#             trees.append(tree)
+#
+#             lexer.pop()  # advances the input
+#
+#         # reduce operation
+#         elif action[0] == 'r':
+#             lhs, rhs = grammar[int(action[1:])]
+#             stack.reduce(rhs)
+#
+#             state = stack.get(-1)
+#             stack.append_token(lhs, lexeme, action, state)
+#             stack.append_state(int(gotos[state][lhs]))
+#
+#             new_tree = Tree(lhs)
+#             for tree in trees[-len(rhs):]:
+#                 new_tree.add(tree)
+#
+#             trees = trees[:-len(rhs)]
+#             trees.append(new_tree)
+#
+#         # not a shift or reduce operation, must be an "accept" operation
+#         elif action == "acc":
+#             lhs, rhs = grammar[0]
+#
+#             # TODOd #7: same as reduce but using the 1st rule of the grammar
+#             root = Tree()
+#             root.data = lhs
+#             for tree in trees:
+#                 root.add(tree)
+#
+#             # TODOd #8: return the new tree
+#             return root, stack
+#
+#         else:
+#             raise SyntaxError("Bottomed out in syntax.py")
+#
+#             print(stack._frames[-1])
