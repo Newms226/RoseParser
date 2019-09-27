@@ -28,10 +28,12 @@ class Stack:
 
     # Stack class:
     def __init__(self):
-        initial_fram = Stack.StackFrame("BOF", None, None, [0], [])
-        self._frames = [initial_fram]
+        initial_frame = Stack.StackFrame("BOF", None, None, [0], [])
+        self._frames = [initial_frame]
 
     def cur_state(self): return self._frames[-1].cur_state
+
+    def cur_frame(self): return self._frames[-1]
 
     def raw_stack(self): return self._frames[-1].cur_stack.copy()
 

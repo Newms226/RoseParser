@@ -1,7 +1,7 @@
 STACK_FRAME = """\
 Read input `{}` as token `{}`"
   action: {}
-New Stack: {}"""
+New Stack: [{}]"""
 
 INTRO = """\
 Welcome to the RoseParser. 

@@ -48,6 +48,8 @@ def main():
     actions, gotos = _load_table(slr)
 
     # Log current config for de-bugging
+    os.makedirs("./logs", exist_ok=True)
+
     path = f"./logs/grammar.txt"
     with open(path, 'w') as file:
         file.write("\n".join(_grammar_to_strs(grammar)))
@@ -82,7 +84,7 @@ def main():
 
     i = input("Would you like to view the parse tree? ('y' to accept)\n")
     if i == 'y':
-        stack.get_frame(-1).cur_trees[0].print("")
+        stack.cur_frame().cur_trees[0].print("")
 
     i = input("Would you like to view the parse frames? ('y' to accept)\n")
     if i == 'y':
